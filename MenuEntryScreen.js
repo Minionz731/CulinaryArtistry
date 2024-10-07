@@ -4,7 +4,13 @@ import { View, Text, TextInput, TouchableOpacity } from 'react-native';
 import { styles } from './styles';
 import Header from './Header';
 
-const MenuEntryScreen = () => {
+const MenuEntryScreen = ({ navigation }) => {
+  return (
+    <View style={styles.container}>
+      <Text style={styles.heading}>Menu Entry</Text>
+      <Button title="Go to Admin" onPress={() => navigation.navigate('Admin')} />
+    </View>
+  );
   const [dishName, setDishName] = useState('');
   const [description, setDescription] = useState('');
   const [course, setCourse] = useState('');

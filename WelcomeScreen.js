@@ -7,7 +7,11 @@ import Header from './Header';
 const WelcomeScreen = ({ navigation }) => {
   const [username, setUsername] = useState('');
   const [isChef, setIsChef] = useState(false);
-
+  <View style={styles.container}>
+      <Text style={styles.heading}>Welcome to Culinary Artistry</Text>
+      <Button title="Go to Home" onPress={() => navigation.navigate('Home')} />
+    </View>
+    
   const handleLogin = () => {
     if (isChef) {
       navigation.navigate('ChefHome');
