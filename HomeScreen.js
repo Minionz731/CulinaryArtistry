@@ -2,7 +2,6 @@ import React, { useState } from 'react';
 import { View, Text, FlatList, Button, StyleSheet, TouchableOpacity } from 'react-native';
 import { NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
-import { styles } from './styles';
 import Header from './Header';
 
 // Import the screen components
