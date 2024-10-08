@@ -1,6 +1,6 @@
 
 import React from 'react';
-import { View, Text, TextInput, TouchableOpacity } from 'react-native';
+import { View, Text, TextInput,Button, TouchableOpacity } from 'react-native';
 import { styles } from './styles';
 import Header from './Header';
 

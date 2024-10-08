@@ -7,38 +7,35 @@ import Header from './Header';
 const WelcomeScreen = ({ navigation }) => {
   const [username, setUsername] = useState('');
   const [isChef, setIsChef] = useState(false);
-  <View style={styles.container}>
-      <Text style={styles.heading}>Welcome to Culinary Artistry</Text>
-      <Button title="Go to Home" onPress={() => navigation.navigate('Home')} />
-    </View>
-    
+
   const handleLogin = () => {
-    if (isChef) {
-      navigation.navigate('ChefHome');
+    if (username === 'Chefstry') {
+      setIsChef(true);
+      navigation.navigate('MenuEntry'); // Navigate to Menu Entry for Chefstry
     } else {
-      navigation.navigate('Home');
+      setIsChef(false);
+      navigation.navigate('Home'); // Regular user goes to Home screen
     }
   };
 
   return (
     <View style={styles.container}>
-    <Header saying="Every meal tells a story, let yours be unforgettable." />
+      <Header saying="Every meal tells a story, let yours be unforgettable." />
       <View style={styles.content}>
-        <Text>This is another page!</Text>
-      <Text style={styles.title}>Welcome to the Private Chef App</Text>
-      <TextInput
-        style={styles.input}
-        placeholder="Enter your name"
-        value={username}
-        onChangeText={setUsername}
-      />
-      <TouchableOpacity style={styles.button} onPress={() => setIsChef(!isChef)}>
-        <Text style={styles.buttonText}>{isChef ? 'Log in as User' : 'Log in as Chef'}</Text>
-      </TouchableOpacity>
-      <TouchableOpacity style={styles.button} onPress={handleLogin}>
-        <Text style={styles.buttonText}>Log In</Text>
-      </TouchableOpacity>
-    </View>
+        <Text style={styles.title}>Welcome to the Private Chef App</Text>
+        <TextInput
+          style={styles.input}
+          placeholder="Enter your name"
+          value={username}
+          onChangeText={setUsername}
+        />
+        <TouchableOpacity style={styles.button} onPress={() => setIsChef(!isChef)}>
+          <Text style={styles.buttonText}>{isChef ? 'Log in as User' : 'Log in as Chef'}</Text>
+        </TouchableOpacity>
+        <TouchableOpacity style={styles.button} onPress={handleLogin}>
+          <Text style={styles.buttonText}>Log In</Text>
+        </TouchableOpacity>
+      </View>
     </View>
   );
 };

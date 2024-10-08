@@ -1,27 +1,60 @@
 
 import React, { useState } from 'react';
-import { View, Text, TextInput, TouchableOpacity } from 'react-native';
+import { View, Text, TextInput, TouchableOpacity, Button, FlatList } from 'react-native';
 import { styles } from './styles';
-import Header from './Header';
 
 const MenuEntryScreen = ({ navigation }) => {
-  return (
-    <View style={styles.container}>
-      <Text style={styles.heading}>Menu Entry</Text>
-      <Button title="Go to Admin" onPress={() => navigation.navigate('Admin')} />
-    </View>
-  );
   const [dishName, setDishName] = useState('');
   const [description, setDescription] = useState('');
   const [course, setCourse] = useState('');
   const [price, setPrice] = useState('');
+  const [menu, setMenu] = useState([]); // State to hold the list of menu items
 
   const handleAddMenuItem = () => {
-    // Add functionality to add the menu item to the list
+    if (dishName && description && course && price) {
+      // Create a new menu item object
+      const newItem = {
+        id: Date.now().toString(), // unique ID for the item
+        dishName,
+        description,
+        course,
+        price,
+      };
+
+      // Add the new item to the menu list
+      setMenu([...menu, newItem]);
+
+      // Clear input fields after adding
+      setDishName('');
+      setDescription('');
+      setCourse('');
+      setPrice('');
+    } else {
+      alert('Please fill in all fields to add a dish.');
+    }
   };
+
+  const handleRemoveMenuItem = (itemId) => {
+    // Remove the item with the specified ID from the menu list
+    setMenu(menu.filter(item => item.id !== itemId));
+  };
+
+  const renderMenuItem = ({ item }) => (
+    <View style={styles.menuItem}>
+      <Text style={styles.menuText}>Dish: {item.dishName}</Text>
+      <Text style={styles.menuText}>Description: {item.description}</Text>
+      <Text style={styles.menuText}>Course: {item.course}</Text>
+      <Text style={styles.menuText}>Price: {item.price}</Text>
+      <TouchableOpacity style={styles.removeButton} onPress={() => handleRemoveMenuItem(item.id)}>
+        <Text style={styles.buttonText}>Remove</Text>
+      </TouchableOpacity>
+    </View>
+  );
 
   return (
     <View style={styles.container}>
+      <Text style={styles.heading}>Menu Entry</Text>
+      
       <Text style={styles.title}>Add a New Dish</Text>
       <TextInput
         style={styles.input}
@@ -50,6 +83,19 @@ const MenuEntryScreen = ({ navigation }) => {
       <TouchableOpacity style={styles.button} onPress={handleAddMenuItem}>
         <Text style={styles.buttonText}>Add Item</Text>
       </TouchableOpacity>
+
+      {/* Menu List */}
+      <FlatList
+        data={menu}
+        keyExtractor={(item) => item.id}
+        renderItem={renderMenuItem}
+        ListEmptyComponent={<Text style={styles.emptyText}>No menu items added yet.</Text>}
+      />
+
+      <Button
+        title="Go to Home"
+        onPress={() => navigation.navigate('Home')}
+      />
     </View>
   );
 };
