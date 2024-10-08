@@ -4,10 +4,12 @@ import { View, Text, Image, StyleSheet } from 'react-native';
 const Header = ({ saying }) => {
   return (
     <View style={styles.container}>
-      <Image
-        source={{ uri: 'CA_logo.jpeg' }} 
-        style={styles.logo}
-      />
+     <Image
+  source={require('./assets/CA_Logo.jpeg')}
+  style={styles.logo}
+/>
+
+
       <Text style={styles.saying}>{saying}</Text>
     </View>
   );

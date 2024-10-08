@@ -1,6 +1,6 @@
 
 import React, { useState } from 'react';
-import { View, Text, TextInput, TouchableOpacity } from 'react-native';
+import { View, Text, TextInput,Button, TouchableOpacity } from 'react-native';
 import { styles } from './styles';
 import Header from './Header';
 
@@ -9,7 +9,7 @@ const WelcomeScreen = ({ navigation }) => {
   const [isChef, setIsChef] = useState(false);
 
   const handleLogin = () => {
-    if (username === 'Chefstry') {
+    if (username === 'Christofell') {
       setIsChef(true);
       navigation.navigate('MenuEntry'); // Navigate to Menu Entry for Chefstry
     } else {
