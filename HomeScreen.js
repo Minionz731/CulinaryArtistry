@@ -1,8 +1,9 @@
-
-import React from 'react';
-import { View, Text, FlatList, Button, StyleSheet } from 'react-native';
+import React, { useState } from 'react';
+import { View, Text, FlatList, Button, StyleSheet, TouchableOpacity } from 'react-native';
 import { NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
+import { styles } from './styles';
+import Header from './Header';
 
 // Import the screen components
 import WelcomeScreen from './WelcomeScreen';  
@@ -14,25 +15,36 @@ import AdminScreen from './AdminScreen';
 const Stack = createNativeStackNavigator();
 
 const HomeScreen = ({ navigation }) => {
-  return (
-    <View style={styles.container}>
-      <Text style={styles.heading}>Home Screen</Text>
-      <Button title="Go to Menu" onPress={() => navigation.navigate('MenuEntry')} />
-    </View>
-  );
+  // Predefined list of courses
+  const courses = ['Starter', 'Main', 'Dessert'];
 
-  const menuItems = [
+  // Initial menu items state
+  const [menuItems, setMenuItems] = useState([
     { id: '1', name: 'Salad', description: 'Fresh mixed greens', course: 'Starter', price: '$5' },
     { id: '2', name: 'Steak', description: 'Juicy grilled steak', course: 'Main', price: '$15' },
     { id: '3', name: 'Ice Cream', description: 'Creamy vanilla ice cream', course: 'Dessert', price: '$4' },
-    
-  ];
+  ]);
+
+  // Calculate the total number of menu items
+  const totalItems = menuItems.length;
+
+  // Function to add a new menu item (for Part 2)
+  const addMenuItem = () => {
+    const newItem = {
+      id: (menuItems.length + 1).toString(),
+      name: `New Dish ${menuItems.length + 1}`,
+      description: 'Description of the new dish',
+      course: courses[menuItems.length % courses.length],
+      price: '$10',
+    };
+    setMenuItems([...menuItems, newItem]);
+  };
 
   const renderItem = ({ item }) => (
     <View style={styles.item}>
       <Text style={styles.title}>{item.name}</Text>
       <Text style={styles.details}>{item.description}</Text>
-      <Text style={styles.details}>{item.course}</Text>
+      <Text style={styles.details}>Course: {item.course}</Text>
       <Text style={styles.price}>{item.price}</Text>
     </View>
   );
@@ -40,11 +52,16 @@ const HomeScreen = ({ navigation }) => {
   return (
     <View style={styles.container}>
       <Text style={styles.heading}>Today's Menu</Text>
+      <Text>Total items on the menu: {totalItems}</Text>
       <FlatList
         data={menuItems}
         renderItem={renderItem}
         keyExtractor={(item) => item.id}
       />
+      {/* Add button to add new menu items (for Part 2) */}
+      <TouchableOpacity style={styles.addButton} onPress={addMenuItem}>
+        <Text style={styles.addButtonText}>Add Menu Item</Text>
+      </TouchableOpacity>
     </View>
   );
 };
@@ -63,8 +80,6 @@ const App = () => {
     </NavigationContainer>
   );
 };
-
-
 
 const styles = StyleSheet.create({
   container: {
@@ -102,6 +117,18 @@ const styles = StyleSheet.create({
     fontWeight: 'bold',
     color: '#333',
     marginTop: 5,
+  },
+  addButton: {
+    backgroundColor: '#007bff',
+    padding: 15,
+    borderRadius: 8,
+    marginTop: 20,
+    alignItems: 'center',
+  },
+  addButtonText: {
+    color: '#fff',
+    fontWeight: 'bold',
+    fontSize: 16,
   },
 });
 
