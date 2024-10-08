@@ -6,7 +6,7 @@ import WelcomeScreen from './WelcomeScreen';
 import HomeScreen from './HomeScreen'; 
 import MenuEntryScreen from './MenuEntryScreen'; 
 import PreferencesScreen from './PreferencesScreen'; 
-import ContactBookScreen from './Contact&Book'; 
+import ContactBookScreen from './Contact&Book';
 import AdminScreen from './AdminScreen'; 
 import Header from './Header'; 
 
@@ -38,7 +38,7 @@ const App = () => {
         />
         <Stack.Screen 
           name="ContactBook" 
-          component={Contact&Book} 
+          component={ContactBookScreen} 
           options={{ header: () => <Header saying="Get in Touch and Book" /> }}
         />
         <Stack.Screen 

@@ -5,8 +5,7 @@ import { NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 
 // Import the screen components
-import WelcomeScreen from './WelcomeScreen'; 
-import HomeScreen from './HomeScreen'; 
+import WelcomeScreen from './WelcomeScreen';  
 import MenuEntryScreen from './MenuEntryScreen'; 
 import PreferencesScreen from './PreferencesScreen'; 
 import ContactBookScreen from './Contact&Book'; 
