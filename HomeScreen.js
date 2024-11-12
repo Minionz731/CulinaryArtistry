@@ -1,134 +1,81 @@
-import React, { useState } from 'react';
-import { View, Text, FlatList, Button, StyleSheet, TouchableOpacity } from 'react-native';
-import { NavigationContainer } from '@react-navigation/native';
-import { createNativeStackNavigator } from '@react-navigation/native-stack';
-import Header from './Header';
+import React from 'react';
+import { View, Text, FlatList, StyleSheet } from 'react-native';
 
-// Import the screen components
-import WelcomeScreen from './WelcomeScreen';  
-import MenuEntryScreen from './MenuEntryScreen'; 
-import PreferencesScreen from './PreferencesScreen'; 
-import ContactBookScreen from './Contact&Book'; 
-import AdminScreen from './AdminScreen';
+export const HomeScreen = ({ route }) => {
+    const predefinedCourses = [
+        'Appetizers',
+        'Main Courses',
+        'Desserts',
+        'Beverages'
+    ];
+    const menuItems = route.params?.menuItems || [];
 
-const Stack = createNativeStackNavigator();
+    return (
+        <View style={styles.container}>
+            <Text style={styles.logo}>🍴 Culinary Artistry</Text>
+            <Text style={styles.tagline}>“Bringing flavor to life, one dish at a time.”</Text>
+            <Text style={styles.title}>Home</Text>
 
-const HomeScreen = ({ navigation }) => {
-  // Predefined list of courses
-  const courses = ['Starter', 'Main', 'Dessert'];
+            <Text style={styles.sectionTitle}>Courses:</Text>
+            <FlatList
+                data={predefinedCourses}
+                keyExtractor={(item, index) => index.toString()}
+                renderItem={({ item }) => (
+                    <Text style={styles.courseItem}>{item}</Text>
+                )}
+            />
 
-  // Initial menu items state
-  const [menuItems, setMenuItems] = useState([
-    { id: '1', name: 'Salad', description: 'Fresh mixed greens', course: 'Starter', price: '$5' },
-    { id: '2', name: 'Steak', description: 'Juicy grilled steak', course: 'Main', price: '$15' },
-    { id: '3', name: 'Ice Cream', description: 'Creamy vanilla ice cream', course: 'Dessert', price: '$4' },
-  ]);
+            <Text style={styles.sectionTitle}>Chef's Menu:</Text>
+            <FlatList
+                data={menuItems}
+                keyExtractor={(item, index) => index.toString()}
+                renderItem={({ item }) => (
+                    <Text style={styles.menuItem}>{item}</Text>
+                )}
+            />
 
-  // Calculate the total number of menu items
-  const totalItems = menuItems.length;
-
-  // Function to add a new menu item (for Part 2)
-  const addMenuItem = () => {
-    const newItem = {
-      id: (menuItems.length + 1).toString(),
-      name: `New Dish ${menuItems.length + 1}`,
-      description: 'Description of the new dish',
-      course: courses[menuItems.length % courses.length],
-      price: '$10',
-    };
-    setMenuItems([...menuItems, newItem]);
-  };
-
-  const renderItem = ({ item }) => (
-    <View style={styles.item}>
-      <Text style={styles.title}>{item.name}</Text>
-      <Text style={styles.details}>{item.description}</Text>
-      <Text style={styles.details}>Course: {item.course}</Text>
-      <Text style={styles.price}>{item.price}</Text>
-    </View>
-  );
-
-  return (
-    <View style={styles.container}>
-      <Text style={styles.heading}>Today's Menu</Text>
-      <Text>Total items on the menu: {totalItems}</Text>
-      <FlatList
-        data={menuItems}
-        renderItem={renderItem}
-        keyExtractor={(item) => item.id}
-      />
-      {/* Add button to add new menu items (for Part 2) */}
-      <TouchableOpacity style={styles.addButton} onPress={addMenuItem}>
-        <Text style={styles.addButtonText}>Add Menu Item</Text>
-      </TouchableOpacity>
-    </View>
-  );
-};
-
-const App = () => {
-  return (
-    <NavigationContainer>
-      <Stack.Navigator initialRouteName="Welcome">
-        <Stack.Screen name="Welcome" component={WelcomeScreen} />
-        <Stack.Screen name="Home" component={HomeScreen} />
-        <Stack.Screen name="MenuEntry" component={MenuEntryScreen} />
-        <Stack.Screen name="Preferences" component={PreferencesScreen} />
-        <Stack.Screen name="ContactBook" component={ContactBookScreen} />
-        <Stack.Screen name="Admin" component={AdminScreen} />
-      </Stack.Navigator>
-    </NavigationContainer>
-  );
+            <Text style={styles.footer}>Total Items: {menuItems.length}</Text>
+        </View>
+    );
 };
 
 const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    padding: 20,
-    backgroundColor: '#f8f8f8',
-  },
-  heading: {
-    fontSize: 24,
-    fontWeight: 'bold',
-    marginBottom: 10,
-    textAlign: 'center',
-  },
-  item: {
-    backgroundColor: '#ffffff',
-    padding: 15,
-    marginVertical: 8,
-    borderRadius: 8,
-    shadowColor: '#000',
-    shadowOffset: { width: 0, height: 1 },
-    shadowOpacity: 0.3,
-    shadowRadius: 1,
-    elevation: 2,
-  },
-  title: {
-    fontSize: 18,
-    fontWeight: 'bold',
-  },
-  details: {
-    fontSize: 14,
-    color: '#555',
-  },
-  price: {
-    fontSize: 16,
-    fontWeight: 'bold',
-    color: '#333',
-    marginTop: 5,
-  },
-  addButton: {
-    backgroundColor: '#007bff',
-    padding: 15,
-    borderRadius: 8,
-    marginTop: 20,
-    alignItems: 'center',
-  },
-  addButtonText: {
-    color: '#fff',
-    fontWeight: 'bold',
-    fontSize: 16,
-  },
+    container: {
+        flex: 1,
+        padding: 16,
+    },
+    logo: {
+        fontSize: 24,
+        fontWeight: 'bold',
+        marginBottom: 8,
+    },
+    tagline: {
+        fontSize: 16,
+        fontStyle: 'italic',
+        marginBottom: 20,
+    },
+    title: {
+        fontSize: 20,
+        fontWeight: 'bold',
+        marginBottom: 20,
+    },
+    sectionTitle: {
+        fontSize: 18,
+        fontWeight: 'bold',
+        marginTop: 20,
+        marginBottom: 10,
+    },
+    courseItem: {
+        fontSize: 16,
+        marginVertical: 4,
+    },
+    menuItem: {
+        fontSize: 16,
+        marginVertical: 4,
+    },
+    footer: {
+        fontSize: 18,
+        fontWeight: 'bold',
+        marginTop: 20,
+    },
 });
-
-export default App;

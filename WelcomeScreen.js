@@ -1,43 +1,62 @@
-
 import React, { useState } from 'react';
-import { View, Text, TextInput,Button, TouchableOpacity } from 'react-native';
-import { styles } from './styles';
-import Header from './Header';
+import { View, Text, TextInput, Button, StyleSheet } from 'react-native';
+import { useNavigation } from '@react-navigation/native';
 
-const WelcomeScreen = ({ navigation }) => {
-  const [username, setUsername] = useState('');
-  const [isChef, setIsChef] = useState(false);
+export const WelcomeScreen = () => {
+    const [name, setName] = useState('');
+    const navigation = useNavigation();
 
-  const handleLogin = () => {
-    if (username === 'Christofell') {
-      setIsChef(true);
-      navigation.navigate('MenuEntry'); // Navigate to Menu Entry for Chefstry
-    } else {
-      setIsChef(false);
-      navigation.navigate('Home'); // Regular user goes to Home screen
-    }
-  };
+    const handleLogin = () => {
+        if (name === 'Chefstry') {
+            navigation.navigate('MenuEntryScreen');
+        } else {
+            alert('Please log in as a regular user.');
+        }
+    };
 
-  return (
-    <View style={styles.container}>
-      <Header saying="Every meal tells a story, let yours be unforgettable." />
-      <View style={styles.content}>
-        <Text style={styles.title}>Welcome to the Private Chef App</Text>
-        <TextInput
-          style={styles.input}
-          placeholder="Enter your name"
-          value={username}
-          onChangeText={setUsername}
-        />
-        <TouchableOpacity style={styles.button} onPress={() => setIsChef(!isChef)}>
-          <Text style={styles.buttonText}>{isChef ? 'Log in as User' : 'Log in as Chef'}</Text>
-        </TouchableOpacity>
-        <TouchableOpacity style={styles.button} onPress={handleLogin}>
-          <Text style={styles.buttonText}>Log In</Text>
-        </TouchableOpacity>
-      </View>
-    </View>
-  );
+    return (
+        <View style={styles.container}>
+            <Text style={styles.logo}>🍴 Culinary Artistry</Text>
+            <Text style={styles.tagline}>“Bringing flavor to life, one dish at a time.”</Text>
+            <Text style={styles.welcomeText}>Welcome to Culinary Artistry!</Text>
+            <TextInput
+                style={styles.input}
+                placeholder="Enter your name"
+                value={name}
+                onChangeText={setName}
+            />
+            <Button title="Log In" onPress={handleLogin} />
+        </View>
+    );
 };
 
-export default WelcomeScreen;
+const styles = StyleSheet.create({
+    container: {
+        flex: 1,
+        justifyContent: 'center',
+        alignItems: 'center',
+        padding: 16,
+    },
+    logo: {
+        fontSize: 24,
+        fontWeight: 'bold',
+        marginBottom: 8,
+    },
+    tagline: {
+        fontSize: 16,
+        fontStyle: 'italic',
+        marginBottom: 20,
+    },
+    welcomeText: {
+        fontSize: 18,
+        marginBottom: 20,
+    },
+    input: {
+        height: 40,
+        borderColor: 'gray',
+        borderWidth: 1,
+        width: '80%',
+        padding: 10,
+        marginBottom: 20,
+    },
+});
